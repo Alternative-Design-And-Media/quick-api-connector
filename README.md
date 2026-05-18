@@ -1,5 +1,7 @@
 # quick-api-connector
 
+0.1.0
+
 Type-safe TypeScript connector for the QUiCK API (`v1` + `v2`) with native `fetch`, Cloudflare Worker compatibility, and strict endpoint typing derived from `api.json`.
 
 ## Installation
