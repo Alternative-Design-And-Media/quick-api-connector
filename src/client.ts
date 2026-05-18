@@ -34,7 +34,20 @@ const toQueryString = (query: RequestOptions['query']): string => {
   return queryString ? `?${queryString}` : '';
 };
 
-const trimSlashes = (value: string): string => value.replace(/^\/+|\/+$/g, '');
+const trimSlashes = (value: string): string => {
+  let start = 0;
+  let end = value.length;
+
+  while (start < end && value[start] === '/') {
+    start += 1;
+  }
+
+  while (end > start && value[end - 1] === '/') {
+    end -= 1;
+  }
+
+  return value.slice(start, end);
+};
 
 const createUrl = (baseUrl: string, path: string, query?: RequestOptions['query']): string => {
   const normalizedBase = baseUrl.startsWith('http://') || baseUrl.startsWith('https://')
