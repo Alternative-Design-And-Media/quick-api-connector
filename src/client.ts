@@ -78,7 +78,7 @@ export const createQuickApiClient = (config: QuickApiClientConfig): QuickApiClie
     const response = await fetchFn(createUrl(config.baseUrl, path, options.query), requestInit);
 
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}: ${await response.text()}`);
+      throw new Error(`Request failed with status ${response.status}`);
     }
 
     return response.json() as Promise<T>;

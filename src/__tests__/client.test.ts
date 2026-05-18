@@ -30,7 +30,6 @@ describe('createQuickApiClient', () => {
     const fetchFn = vi.fn().mockResolvedValue({
       ok: false,
       status: 400,
-      text: async () => 'Bad Request',
     });
 
     const client = createQuickApiClient({
@@ -38,6 +37,6 @@ describe('createQuickApiClient', () => {
       fetchFn: fetchFn as unknown as typeof fetch,
     });
 
-    await expect(client.get('/users')).rejects.toThrow('Request failed with status 400: Bad Request');
+    await expect(client.get('/users')).rejects.toThrow('Request failed with status 400');
   });
 });
