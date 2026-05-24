@@ -7,7 +7,7 @@ export class CompaniesApi {
   public list(): Promise<ResponseFor<'/2/companies', 'get'>> {
     this.client.assertOAuthOnly('companies.list');
     return this.client.requestEndpoint('/2/companies', 'get', '/2/companies');
-  },
+  }
 
   public getUserProfile(): Promise<ResponseFor<'/2/user-profile', 'get'>> {
     this.client.assertOAuthOnly('companies.getUserProfile');

@@ -17,7 +17,7 @@ describe('QuickClient', () => {
       fetchFn: fetchFn as unknown as typeof fetch,
     });
 
-    await client.listExpensesV1({ page: 2, page_size: 50 });
+    await client.expenses.listV1({ page: 2, page_size: 50 });
 
     expect(fetchFn).toHaveBeenCalledWith('https://api.example.com/1/expenses?page=2&page_size=50', {
       method: 'GET',
@@ -44,7 +44,7 @@ describe('QuickClient', () => {
       fetchFn: fetchFn as unknown as typeof fetch,
     });
 
-    await client.listCompanies();
+    await client.companies.list();
 
     expect(fetchFn).toHaveBeenCalledWith('https://api.example.com/2/companies', {
       method: 'GET',
@@ -70,7 +70,7 @@ describe('QuickClient', () => {
       fetchFn: fetchFn as unknown as typeof fetch,
     });
 
-    await client.getExpenseV2(42, ['items', 'post_its']);
+    await client.expenses.getV2(42, ['items', 'post_its']);
 
     expect(fetchFn).toHaveBeenCalledWith('https://api.example.com/2/expenses/42?fields=items%2Cpost_its', expect.any(Object));
   });
@@ -84,7 +84,7 @@ describe('QuickClient', () => {
       fetchFn: fetchFn as unknown as typeof fetch,
     });
 
-    expect(() => client.listCompanies()).toThrow('requires OAuth bearer authentication');
+    expect(() => client.companies.list()).toThrow('requires OAuth bearer authentication');
     expect(fetchFn).not.toHaveBeenCalled();
   });
 
@@ -101,6 +101,6 @@ describe('QuickClient', () => {
       fetchFn: fetchFn as unknown as typeof fetch,
     });
 
-    await expect(client.listExpensesV1()).rejects.toThrow('QUiCK API request failed (400)');
+    await expect(client.expenses.listV1()).rejects.toThrow('QUiCK API request failed (400)');
   });
 });

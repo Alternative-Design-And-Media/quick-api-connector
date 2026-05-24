@@ -9,7 +9,7 @@ export class IncomesApi {
 
   public list(params?: ListIncomesParams): Promise<ResponseFor<'/1/incomes', 'get'>> {
     return this.client.requestEndpoint('/1/incomes', 'get', '/1/incomes', { query: params });
-  },
+  }
 
   public get(incomeId: number, fields?: IncomeFields[]): Promise<ResponseFor<'/1/incomes/{income_id}', 'get'>> {
     return this.client.requestEndpoint('/1/incomes/{income_id}', 'get', `/1/incomes/${incomeId}`, {
