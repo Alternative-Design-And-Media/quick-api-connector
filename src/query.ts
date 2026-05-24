@@ -28,22 +28,35 @@ export class QuickQueryBuilder<TQuery extends Record<string, unknown>> {
     return this;
   }
 
-  public fields(value: string | string[]): this {
+  public fields<T extends TQuery & { fields?: string }>(
+    this: QuickQueryBuilder<T>,
+    value: string | string[],
+  ): this {
     const normalized = Array.isArray(value) ? value.join(',') : value;
-    return this.where('fields' as keyof TQuery, normalized as TQuery[keyof TQuery]);
+    return this.where('fields', normalized);
   }
 
-  public page(value: number): this {
-    return this.where('page' as keyof TQuery, value as TQuery[keyof TQuery]);
+  public page<T extends TQuery & { page?: number }>(
+    this: QuickQueryBuilder<T>,
+    value: number,
+  ): this {
+    return this.where('page', value);
   }
 
-  public pageSize(value: number): this {
-    return this.where('page_size' as keyof TQuery, value as TQuery[keyof TQuery]);
+  public pageSize<T extends TQuery & { page_size?: number }>(
+    this: QuickQueryBuilder<T>,
+    value: number,
+  ): this {
+    return this.where('page_size', value);
   }
 
-  public orderBy(field: string, direction: QuerySortDirection = 'asc'): this {
+  public orderBy<T extends TQuery & { ordering?: string }>(
+    this: QuickQueryBuilder<T>,
+    field: string,
+    direction: QuerySortDirection = 'asc',
+  ): this {
     const ordering = direction === 'desc' ? `-${field}` : field;
-    return this.where('ordering' as keyof TQuery, ordering as TQuery[keyof TQuery]);
+    return this.where('ordering', ordering);
   }
 
   public build(): TQuery {
