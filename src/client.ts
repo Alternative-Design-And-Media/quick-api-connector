@@ -1,14 +1,14 @@
 import type { paths } from './types/generated.js';
-import { accountingMethods, type AccountingApi } from './accounting.js';
-import { artifactsMethods, type ArtifactsApi } from './artifacts.js';
-import { companiesMethods, type CompaniesApi } from './companies.js';
-import { documentsMethods, type DocumentsApi } from './documents.js';
-import { expensesMethods, type ExpensesApi } from './expenses.js';
-import { incomesMethods, type IncomesApi } from './incomes.js';
-import { miscMethods, type MiscApi } from './misc.js';
-import { salariesMethods, type SalariesApi } from './salaries.js';
-import { tagsMethods, type TagsApi } from './tags.js';
-import { taxesMethods, type TaxesApi } from './taxes.js';
+import { AccountingApi } from './accounting.js';
+import { ArtifactsApi } from './artifacts.js';
+import { CompaniesApi } from './companies.js';
+import { DocumentsApi } from './documents.js';
+import { ExpensesApi } from './expenses.js';
+import { IncomesApi } from './incomes.js';
+import { MiscApi } from './misc.js';
+import { SalariesApi } from './salaries.js';
+import { TagsApi } from './tags.js';
+import { TaxesApi } from './taxes.js';
 
 export const QUICK_DEFAULT_BASE_URL = 'https://api.quick.local';
 
@@ -64,10 +64,30 @@ export class QuickApiError extends Error {
 export class QuickClient {
   private readonly fetchFn: typeof fetch;
   private readonly baseUrl: string;
+  public readonly expenses: ExpensesApi;
+  public readonly incomes: IncomesApi;
+  public readonly artifacts: ArtifactsApi;
+  public readonly documents: DocumentsApi;
+  public readonly accounting: AccountingApi;
+  public readonly companies: CompaniesApi;
+  public readonly taxes: TaxesApi;
+  public readonly salaries: SalariesApi;
+  public readonly tags: TagsApi;
+  public readonly misc: MiscApi;
 
   constructor(private readonly config: QuickClientConfig) {
     this.fetchFn = config.fetchFn ?? globalThis.fetch.bind(globalThis);
     this.baseUrl = this.normalizeBaseUrl(config.baseUrl ?? QUICK_DEFAULT_BASE_URL);
+    this.expenses = new ExpensesApi(this);
+    this.incomes = new IncomesApi(this);
+    this.artifacts = new ArtifactsApi(this);
+    this.documents = new DocumentsApi(this);
+    this.accounting = new AccountingApi(this);
+    this.companies = new CompaniesApi(this);
+    this.taxes = new TaxesApi(this);
+    this.salaries = new SalariesApi(this);
+    this.tags = new TagsApi(this);
+    this.misc = new MiscApi(this);
   }
 
   public requestEndpoint<P extends ApiPath, M extends HttpMethod>(
@@ -182,32 +202,6 @@ export class QuickClient {
     return response.json() as Promise<T>;
   }
 }
-
-export interface QuickClient extends
-  ExpensesApi,
-  IncomesApi,
-  ArtifactsApi,
-  DocumentsApi,
-  AccountingApi,
-  CompaniesApi,
-  TaxesApi,
-  SalariesApi,
-  TagsApi,
-  MiscApi {}
-
-Object.assign(
-  QuickClient.prototype,
-  expensesMethods,
-  incomesMethods,
-  artifactsMethods,
-  documentsMethods,
-  accountingMethods,
-  companiesMethods,
-  taxesMethods,
-  salariesMethods,
-  tagsMethods,
-  miscMethods,
-);
 
 export const createQuickClient = (config: QuickClientConfig): QuickClient => new QuickClient(config);
 export const createQuickApiClient = createQuickClient;
