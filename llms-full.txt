@@ -14,6 +14,9 @@ Machine-readable reference for AI assistants.
 - `createQuickApiClient(config: QuickClientConfig): QuickClient`
 - `QuickClient`
 - `QuickApiError`
+- `expensesQuery()`
+- `incomesQuery()`
+- `documentsQuery()`
 - Shared domain types from `src/types/index.ts`
 
 ## QuickClientConfig
@@ -27,6 +30,10 @@ type QuickClientConfig =
 ## Exported object-oriented API signatures
 
 ```ts
+expensesQuery().startingAfter(date).startingBefore(date).withPaidStatus(status).withPartner(partner).withTag(tag).sortByCreated(dir).page(n).pageSize(n).build()
+incomesQuery().startingAfter(date).startingBefore(date).withPaidStatus(status).withPartner(partner).sortByDueDate(dir).page(n).pageSize(n).build()
+documentsQuery().startingAfter(date).startingBefore(date).withSearch(value).withTagId(id).sortByCreated(dir).build()
+
 client.expenses.listV1(params?: ListExpensesV1Params)
 client.expenses.listV2(params?: ListExpensesV2Params)
 client.expenses.getV1(expenseId: number, fields?: ExpenseV1Fields[])

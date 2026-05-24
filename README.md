@@ -13,7 +13,7 @@ npm install @alternative-design-and-media/quick-api-connector
 ## Quick start
 
 ```ts
-import { createQuickClient } from '@alternative-design-and-media/quick-api-connector';
+import { createQuickClient, expensesQuery } from '@alternative-design-and-media/quick-api-connector';
 
 const client = createQuickClient({
   apiToken: process.env.QUICK_API_TOKEN!,
@@ -23,6 +23,14 @@ const client = createQuickClient({
 
 const expenses = await client.expenses.listV1({ page: 1, page_size: 50 });
 const expense = await client.expenses.getV2(123, ['items', 'post_its']);
+
+const filteredExpenses = await client.expenses.listV1(
+  expensesQuery()
+    .startingAfter('2025-01-01')
+    .withPaidStatus(2)
+    .sortByCreated('desc')
+    .build(),
+);
 ```
 
 ## Authentication
@@ -64,6 +72,14 @@ OAuth-only endpoints:
 
 - `v1` list endpoints return `{ count, next, previous, results }` and accept `page` / `page_size`.
 - `v2` list endpoints return cursor-style responses with `next` / `previous` links and collection results.
+
+## Query helpers
+
+Fluent query builders are available for common models:
+
+- `expensesQuery()`
+- `incomesQuery()`
+- `documentsQuery()`
 
 ## API reference
 
