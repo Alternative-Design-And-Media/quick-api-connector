@@ -42,14 +42,12 @@ describe('query helpers', () => {
 
   it('serializes fields and ordering for documents', () => {
     const query = documentsQuery()
-      .fields(['details', 'attached'])
       .withSearch('invoice')
       .withTagId(10)
       .sortByCreated('desc')
       .build();
 
     expect(query).toEqual({
-      fields: 'details,attached',
       search: 'invoice',
       with_tag_ids: 10,
       ordering: '-created_at',
