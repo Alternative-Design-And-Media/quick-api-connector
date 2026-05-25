@@ -9,4 +9,5 @@ export * from './taxes.js';
 export * from './salaries.js';
 export * from './tags.js';
 export * from './misc.js';
+export * from './query.js';
 export * from './types/index.js';

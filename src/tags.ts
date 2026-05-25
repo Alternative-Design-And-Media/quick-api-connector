@@ -1,26 +1,22 @@
-import type { BodyFor, QueryFor, QuickClient, ResponseFor } from './client.js';
+import type { BodyFor, QueryFor, ResponseFor } from './client.js';
+import type { QuickClient } from './client.js';
 
-export interface TagsApi {
-  listTags(params?: QueryFor<'/2/tags', 'get'>): Promise<ResponseFor<'/2/tags', 'get'>>;
-  createTags(body: BodyFor<'/2/tags/create', 'post'>): Promise<ResponseFor<'/2/tags/create', 'post'>>;
-  updateTags(body: BodyFor<'/2/tags/update', 'patch'>): Promise<ResponseFor<'/2/tags/update', 'patch'>>;
-  deleteTags(ids: number[]): Promise<ResponseFor<'/2/tags/delete', 'post'>>;
+export class TagsApi {
+  constructor(private readonly client: QuickClient) {}
+
+  public list(params?: QueryFor<'/2/tags', 'get'>): Promise<ResponseFor<'/2/tags', 'get'>> {
+    return this.client.requestEndpoint('/2/tags', 'get', '/2/tags', { query: params });
+  }
+
+  public create(body: BodyFor<'/2/tags/create', 'post'>): Promise<ResponseFor<'/2/tags/create', 'post'>> {
+    return this.client.requestEndpoint('/2/tags/create', 'post', '/2/tags/create', { body });
+  }
+
+  public update(body: BodyFor<'/2/tags/update', 'patch'>): Promise<ResponseFor<'/2/tags/update', 'patch'>> {
+    return this.client.requestEndpoint('/2/tags/update', 'patch', '/2/tags/update', { body });
+  }
+
+  public delete(ids: number[]): Promise<ResponseFor<'/2/tags/delete', 'post'>> {
+    return this.client.requestEndpoint('/2/tags/delete', 'post', '/2/tags/delete', { body: { ids } });
+  }
 }
-
-export const tagsMethods: TagsApi = {
-  listTags(this: QuickClient, params) {
-    return this.requestEndpoint('/2/tags', 'get', '/2/tags', { query: params });
-  },
-
-  createTags(this: QuickClient, body) {
-    return this.requestEndpoint('/2/tags/create', 'post', '/2/tags/create', { body });
-  },
-
-  updateTags(this: QuickClient, body) {
-    return this.requestEndpoint('/2/tags/update', 'patch', '/2/tags/update', { body });
-  },
-
-  deleteTags(this: QuickClient, ids) {
-    return this.requestEndpoint('/2/tags/delete', 'post', '/2/tags/delete', { body: { ids } });
-  },
-};
