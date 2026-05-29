@@ -83,6 +83,8 @@ Fluent query builders are available for common models:
 
 ## API reference
 
+Teljes, `api.json` ↔ wrapper metódusokra bontott lefedettségi mátrix: lásd [`AUDIT.md`](./AUDIT.md) (65/65 endpoint implementálva).
+
 ### Expenses
 
 | Method | HTTP | Path | Description |
