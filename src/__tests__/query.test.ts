@@ -40,6 +40,18 @@ describe('query helpers', () => {
     });
   });
 
+  it('filters incomes by tag (parity with expenses.withTag)', () => {
+    const query = incomesQuery()
+      .withTag('PPC')
+      .pageSize(100)
+      .build();
+
+    expect(query).toEqual({
+      tags: 'PPC',
+      page_size: 100,
+    });
+  });
+
   it('serializes fields and ordering for documents', () => {
     const query = documentsQuery()
       .withSearch('invoice')

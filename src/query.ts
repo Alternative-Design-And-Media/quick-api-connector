@@ -116,6 +116,10 @@ export class IncomesQueryBuilder extends QuickQueryBuilder<IncomesListQuery> {
     return this.where('partner', partner);
   }
 
+  public withTag(tag: string): this {
+    return this.where('tags', tag);
+  }
+
   public sortByDueDate(direction: QuerySortDirection = 'desc'): this {
     return this.orderBy('due_at', direction);
   }
